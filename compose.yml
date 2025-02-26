@@ -18,12 +18,16 @@ services:
             POSTGRES_DB: db
             POSTGRES_USER: postgres
             POSTGRES_PASSWORD: postgres
+        networks:
+            - back-tier
 
     redis:
         image: "redis:alpine"
         ports:
             - "6379:6379"
 
+        networks:
+            - back-tier
     db:
         image: "postgres:alpine"
         environment:
@@ -32,3 +36,46 @@ services:
             POSTGRES_PASSWORD: postgres
         ports:
             - "5432:5432"
+        networks:
+            - back-tier
+
+    result:
+        build: ./result
+        ports:
+          - "4000:4000"
+        depends_on:
+            - db
+        networks:
+            - front-tier
+            - back-tier
+    
+    vote:
+        build: ./vote  
+        ports:
+        - "5000:5000"
+        depends_on:
+        - redis
+        networks:
+        - front-tier
+        - back-tier
+
+    nginx:
+        build: ./nginx
+        ports:
+          - "80:80"
+        depends_on:
+            - vote
+        networks:
+            - front-tier
+    seed:
+        build: ./seed-data
+        depends_on:
+            - nginx
+        networks:
+            - front-tier
+
+networks:
+  front-tier:
+    driver: bridge
+  back-tier:
+    driver: bridge
