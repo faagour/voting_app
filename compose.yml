@@ -14,7 +14,7 @@ services:
             # build-arg TARGETARCH: amd64
             REDIS_HOST: redis
             REDIS_PORT: 6379
-            POSTGRES_HOST: postgres
+            POSTGRES_HOST: db
             POSTGRES_DB: db
             POSTGRES_USER: postgres
             POSTGRES_PASSWORD: postgres
@@ -32,3 +32,8 @@ services:
             POSTGRES_PASSWORD: postgres
         ports:
             - "5432:5432"
+        volumes: 
+        - db:/var/lib/postgresql/data
+volumes:
+  db:
+    driver: local
