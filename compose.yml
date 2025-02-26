@@ -1,0 +1,34 @@
+services:
+    worker:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        ports:
+            - "80:80"
+        depends_on:
+            - redis
+            - postgres
+        environment:
+            BUILDPLATFORM: arm64
+            build-arg TARGETPLATFORM: linux/amd64
+            build-arg TARGETARCH: amd64
+            REDIS_HOST: redis
+            REDIS_PORT: 6379
+            POSTGRES_HOST: postgres
+            POSTGRES_DB: db
+            POSTGRES_USER: postgres
+            POSTGRES_PASSWORD: postgres
+
+    redis:
+        image: "redis:alpine"
+        ports:
+            - "6379:6379"
+
+    postgres:
+        image: "postgres:alpine"
+        environment:
+            POSTGRES_DB: db
+            POSTGRES_USER: postgres
+            POSTGRES_PASSWORD: postgres
+        ports:
+            - "5432:5432"
