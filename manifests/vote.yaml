@@ -26,7 +26,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: vote-servv
+  name: vote-service
 spec:
   selector:
     app: vote

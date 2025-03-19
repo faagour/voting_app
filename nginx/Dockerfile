@@ -23,7 +23,7 @@ RUN rm /etc/nginx/conf.d/default.conf
 COPY ./nginx.conf /etc/nginx/conf.d/default.conf
 
 # Expose port 8000
-EXPOSE 80
+EXPOSE 8001
 
 # Command to start Nginx in the foreground
 CMD ["nginx", "-g", "daemon off;"]
