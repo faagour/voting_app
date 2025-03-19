@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: vote-deployy
+  name: vote-deployement
 spec:
   replicas: 1
   selector:
@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: vote
-          image: europe-west9-docker.pkg.dev/calcium-firefly-448121-d3/voting-image/vote
+          image: europe-west9-docker.pkg.dev/tuto-terraform-amine/voting-image/vote
           ports:
             - containerPort: 5000
           env:
@@ -26,7 +26,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: vote-servv
+  name: vote-service
 spec:
   selector:
     app: vote
