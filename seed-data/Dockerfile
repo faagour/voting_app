@@ -9,4 +9,5 @@ RUN apt-get update && apt-get install -y apache2-utils \
     && sed -i 's/\r$//' /app/generate-votes.sh \
     && python make-data.py
 
+EXPOSE 9000
 CMD ["./generate-votes.sh"]

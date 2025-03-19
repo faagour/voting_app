@@ -53,32 +53,33 @@ services:
     vote:
         build: ./vote  
         ports:
-        - "5000:5000"
+            - "5000:5000"
         depends_on:
-        - redis
+            - redis
         networks:
-        - front-tier
-        - back-tier
+            - front-tier
+            - back-tier
 
     nginx:
         build: ./nginx
         ports:
-          - "81:81"
+          - "8001:8001"
         depends_on:
             - vote
         networks:
             - front-tier
     seed:
         build: ./seed-data
+        ports:
+          - "9000:9000"
         depends_on:
             - nginx
         networks:
             - front-tier
+            - back-tier
 volumes:
   db:
     driver: local
 networks:
-  front-tier:
-    driver: bridge
-  back-tier:
-    driver: bridge
+    front-tier:
+    back-tier:

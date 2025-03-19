@@ -11,5 +11,5 @@ FROM --platform=linux/amd64 nginx:alpine
 WORKDIR /usr/share/nginx/html
 RUN rm -rf ./*
 COPY . .
-EXPOSE 81
+EXPOSE 8001
 CMD ["nginx", "-g", "daemon off;"]
