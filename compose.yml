@@ -1,5 +1,7 @@
 services:
     worker:
+        image: 
+            europe-west9-docker.pkg.dev/tuto-terraform-amine/voting-image/worker
         build:
             context: ./worker
             dockerfile: Dockerfile
@@ -22,7 +24,8 @@ services:
             - back-tier
 
     redis:
-        image: "redis:alpine"
+        image: 
+            "redis:alpine"
         ports:
             - "6379:6379"
 
@@ -41,6 +44,8 @@ services:
         networks:
             - back-tier
     result:
+        image: 
+            europe-west9-docker.pkg.dev/tuto-terraform-amine/voting-image/result
         build: ./result
         ports:
           - "4000:4000"
@@ -51,6 +56,8 @@ services:
             - back-tier
     
     vote:
+        image: 
+            europe-west9-docker.pkg.dev/tuto-terraform-amine/voting-image/vote
         build: ./vote  
         ports:
             - "5000:5000"
@@ -61,6 +68,8 @@ services:
             - back-tier
 
     nginx:
+        image: 
+            europe-west9-docker.pkg.dev/tuto-terraform-amine/voting-image/nginx
         build: ./nginx
         ports:
           - "8001:8001"
@@ -69,6 +78,8 @@ services:
         networks:
             - front-tier
     seed:
+        image: 
+            europe-west9-docker.pkg.dev/tuto-terraform-amine/voting-image/seed
         build: ./seed-data
         ports:
           - "9000:9000"
