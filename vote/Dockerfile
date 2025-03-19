@@ -1,7 +1,7 @@
 FROM python:3.11-slim
 WORKDIR /app
-COPY requirements.txt requirements.txt
+COPY requirements.txt .
 RUN pip install -r requirements.txt
 EXPOSE 5000
 COPY . .
-CMD ["flask", "run", "--debug"]
+CMD ["python", "app.py"]
