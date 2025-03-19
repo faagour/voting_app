@@ -1,9 +1,9 @@
-apiVersion: v1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: vote
+  name: vote-deployy
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: vote
@@ -13,20 +13,24 @@ spec:
         app: vote
     spec:
       containers:
-      - name: vote
-        image: europe-west9-docker.pkg.dev/tuto-terraform-amine/voting-image/vote
-        ports:
-        - containerPort: 5000
+        - name: vote
+          image: europe-west9-docker.pkg.dev/calcium-firefly-448121-d3/voting-image/vote
+          ports:
+            - containerPort: 5000
+          env:
+            - name: REDIS_HOST
+              value: redis
+            - name: REDIS_PORT
+              value: "6379"
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: vote
+  name: vote-servv
 spec:
   selector:
     app: vote
   ports:
-  - protocol: TCP
-    port: 5000
-    targetPort: 5000
-  type: ClusterIP
+    - port: 5000
+      targetPort: 5000
+  type: LoadBalancer
