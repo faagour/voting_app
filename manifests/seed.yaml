@@ -1,7 +1,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: seed-job
+  name: seed
 spec:
   template:
     metadata:
