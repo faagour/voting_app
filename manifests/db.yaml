@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: postgres
-          image: postgres:alpine
+          image: postgres:13-alpine
           ports:
             - containerPort: 5432
           env:
@@ -27,18 +27,31 @@ spec:
           volumeMounts:
             - name: postgres-storage
               mountPath: /var/lib/postgresql/data
+              subPath: data
       volumes:
         - name: postgres-storage
-          emptyDir: {}
+          persistentVolumeClaim:
+            claimName: postgres-pvc # Reference the PVC
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: postgres-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi # Request 1Gi of storage
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: db-service
+  name: db
 spec:
   selector:
     app: db
   ports:
     - port: 5432
       targetPort: 5432
-  type: LoadBalancer
+  type: ClusterIP

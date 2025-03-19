@@ -1,0 +1,22 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: seed-job
+spec:
+  template:
+    metadata:
+      labels:
+        app: seed
+    spec:
+      containers:
+        - name: seed
+          image: europe-west9-docker.pkg.dev/tuto-terraform-amine/voting-image/seed
+          env:
+            - name: NGINX_HOST
+              value: nginx # Reference the nginx service
+            - name: NGINX_PORT
+              value: "8001" # Port exposed by nginx
+          ports:
+            - containerPort: 9000
+      restartPolicy: Never # Ensure the Job is not restarted
+  backoffLimit: 0 # Prevent retries if the Job fails
